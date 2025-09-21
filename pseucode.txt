@@ -1,0 +1,67 @@
+MULAI PROGRAM
+
+  // Inisialisasi data awal
+  DEKLARASI daftar_semua_kursus (dengan nama, kuota, dll.)
+  DEKLARASI kursus_pengguna = [] // Daftar kursus yang berhasil diambil, awalnya kosong
+  DEKLARASI maks_kursus = 3
+  DEKLARASI pengguna_ingin_lanjut = BENAR
+
+  // Gunakan WHILE loop sesuai perintah 2b
+  SELAMA jumlah(kursus_pengguna) < maks_kursus DAN pengguna_ingin_lanjut == BENAR:
+
+    // 1. TAMPILKAN DAFTAR KURSUS YANG TERSEDIA (agar user bisa memilih)
+
+    // 2. MINTA INPUT PENGGUNA
+    INPUT pengguna memilih 'kursus_yang_diminati'
+
+    // 3. PROSES PENDAFTARAN (Logika dari Perintah 1b)
+    COMPUTER mengecek 'kursus_yang_diminati'
+    
+    // Pengecekan yang lebih spesifik
+    IF kuota 'kursus_yang_diminati' > 0 DAN 'kursus_yang_diminati' BELUM ADA di kursus_pengguna THEN
+      // Pendaftaran berhasil
+      TAMBAHKAN 'kursus_yang_diminati' ke daftar kursus_pengguna
+      KURANGI kuota 'kursus_yang_diminati' sebanyak 1
+      CETAK "Selamat! Pendaftaran untuk [nama kursus] berhasil. ✅"
+    ELSE
+      // Pendaftaran gagal
+      CETAK "Maaf, pendaftaran gagal. ❌"
+      // Beri alasan yang spesifik
+      IF kuota 'kursus_yang_diminati' <= 0 THEN
+        CETAK "Alasan: Kuota untuk kursus ini sudah penuh."
+      ELSE IF 'kursus_yang_diminati' SUDAH ADA di kursus_pengguna THEN
+        CETAK "Alasan: Anda sudah terdaftar di kursus ini."
+      ENDIF
+    ENDIF
+
+    // 4. TAMPILKAN STATUS PENDAFTARAN (Logika dari Perintah 2a)
+    CETAK "\n--- Status Pendaftaran Anda Saat Ini ---"
+    UNTUK setiap 'kursus' DALAM daftar_semua_kursus:
+      IF 'kursus' ADA DI DALAM kursus_pengguna:
+        CETAK "- [nama kursus] (Status: Sudah Terdaftar)"
+      ELSE IF kuota 'kursus' > 0:
+        CETAK "- [nama kursus] (Status: Tersedia)"
+      ELSE:
+        CETAK "- [nama kursus] (Status: Kuota Penuh)"
+      ENDIF
+    ENDIF
+    CETAK "Anda telah mendaftar untuk " + jumlah(kursus_pengguna) + " dari " + maks_kursus + " kursus."
+
+    // 5. KONFIRMASI UNTUK LANJUT (Hanya jika belum mencapai batas)
+    IF jumlah(kursus_pengguna) < maks_kursus THEN
+      INPUT pengguna "Apakah ingin mendaftar kursus lain? (ya/tidak)"
+      IF jawaban pengguna == "tidak" THEN
+        pengguna_ingin_lanjut = SALAH // Ini akan menghentikan WHILE loop
+      ENDIF
+    ENDIF
+    
+  END SELAMA // Akhir dari WHILE loop
+
+  // Pesan Penutup
+  CETAK "\n--- Proses Pendaftaran Selesai ---"
+  IF jumlah(kursus_pengguna) >= maks_kursus THEN
+    CETAK "Anda telah mencapai batas maksimal pendaftaran (3 kursus)."
+  ENDIF
+  CETAK "Terima kasih telah menggunakan layanan kami."
+
+AKHIR PROGRAM
